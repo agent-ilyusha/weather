@@ -12,6 +12,7 @@ from main import func_return_values, func_temperature_today
 
 
 Window.title = "Прогноз погоды"
+Window.size = (1280, 520)
 Window.clearcolor = (255, 255, 255, 1)
 
 
@@ -22,8 +23,8 @@ class MyApp(App):
     def __init__(self):
         super().__init__()
         self.layout_temp = GridLayout(cols=3)
-        self.layout_but_inp = GridLayout(cols=2, row_force_default=True, row_default_height=100)
-        self.button = Button(text="Нажми на меня")
+        self.layout_but_inp = GridLayout(cols=2, row_force_default=True, row_default_height=100, size_hint_y=0.3)
+        self.button = Button(text="Нажми на меня для подтверждения города)")
         self.button.bind(on_press=self.on_text)
         self.city_input = TextInput(multiline=False, hint_text="Введите город")
 
@@ -39,14 +40,18 @@ class MyApp(App):
         self.values_list = func_return_values(func_temperature_today(self.city_input.text))
         hour = 0
         for i in range(8):
-            self.layout_temp.add_widget(Label(text=str(hour), font_size=20, color=(0, 0, 0, 1)))
-            self.layout_temp.add_widget(Label(text=self.values_list[0][i], font_size=20, color=(0, 0, 0, 1)))
-            self.layout_temp.add_widget(Label(text=self.values_list[1][i], font_size=20, color=(0, 0, 0, 1)))
+            self.layout_temp.add_widget(Label(text=self.values_list[2][i], font_size=20, color=(0, 0, 0, 1),
+                                              halign='left'))
+            self.layout_temp.add_widget(Label(text=self.values_list[0][i], font_size=20, color=(0, 0, 0, 1),
+                                              halign='left'))
+            self.layout_temp.add_widget(Label(text=self.values_list[1][i], font_size=20, color=(0, 0, 0, 1),
+                                              halign='left'))
             hour += 3
 
     # Чарли и фабрика по созданию виджетов
     def build(self):
-        box = BoxLayout(orientation='vertical', row_force_default=True)
+        box = BoxLayout(orientation='vertical')
+        box.size_hint_y = 1
         box.add_widget(self.layout_but_inp)
         box.add_widget(self.layout_temp)
         return box

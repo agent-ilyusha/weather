@@ -34,12 +34,18 @@ def func_temperature_today(city: str = "Москва") -> dict:
             'utf-8')
         ma_div_weather = par.xpath(f'//*[@id="bd1c"]/div[1]/div[2]/table/tbody/tr[2]/td[{i}]/div/@title')[0]
         if count_time - time.localtime().tm_hour >= 0 and count == 0:
-            dict_hour['now'] = [f'{ma_div_temp.decode()}', f'{ma_div_weather.lower()}']
+            dict_hour['Погода сейчас'] = [f'{ma_div_temp.decode()}', f'{ma_div_weather.lower()}']
             count += 1
         else:
             # для смены дня нужно менять циферку в bd1c
-            dict_hour[count_time] = [f'{ma_div_temp.decode()}',
-                                     f'{ma_div_weather.lower()}']
+            if count_time == 3:
+                var = 'часа'
+            elif count_time == 21:
+                var = 'час'
+            else:
+                var = 'часов'
+            dict_hour[f'Погода в {count_time} {var}'] = [f'{ma_div_temp.decode()}',
+                                                         f'{ma_div_weather.lower()}']
         count_time += 3
     return dict_hour
     # for i in range(1, 9):
@@ -52,5 +58,5 @@ def func_temperature_today(city: str = "Москва") -> dict:
 # //*[@id="bd1c"]/div[1]/div[2]/table/tbody/tr[2]/td[1]/div
 def func_return_values(dict_values_func: dict) -> tuple:
     return list(map(lambda x: x[0], dict_values_func.values())), \
-        list(map(lambda x: x[1], dict_values_func.values()))
-
+        list(map(lambda x: x[1], dict_values_func.values())), \
+        list(map(lambda x: x, dict_values_func.keys()))
