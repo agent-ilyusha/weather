@@ -67,7 +67,6 @@ class My_prognozApp(App):
     def for_text(self, *args):
         self.layout_temp.clear_widgets()
         self.values_list = func_temperature_today(city=self.city_input.text, day=self.day)
-        hour = 0
         if self.values_list != 0:
             for i in range(8):
                 self.layout_temp.add_widget(Label(text=self.values_list[2][i], font_size=20, color=(0, 0, 0, 1),
@@ -76,7 +75,6 @@ class My_prognozApp(App):
                                                   halign='left'))
                 self.layout_temp.add_widget(Label(text=self.values_list[1][i], font_size=20, color=(0, 0, 0, 1),
                                                   halign='left'))
-                hour += 3
         else:
             self.layout_temp.clear_widgets()
             self.layout_temp.add_widget(Label(text='Введи реальный город', font_size=50, color=(0, 0, 0, 1)))
