@@ -56,7 +56,7 @@ def func_temperature_today(city: str = "Москва", day='сегодня') -> 
             count_time += 3
         return list(map(lambda x: x[0], dict_hour.values())), \
             list(map(lambda x: x[1], dict_hour.values())), \
-            list(map(lambda x: x, dict_hour.keys()))
+            list(map(lambda x: str(x), dict_hour.keys()))
     except IndexError:
         return 0
 
