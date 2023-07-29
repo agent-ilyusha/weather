@@ -8,13 +8,11 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.core.window import Window
-from main import func_return_values, func_temperature_today
-
+from main import func_temperature_today
 
 Window.title = "Прогноз погоды"
 Window.size = (1280, 520)
 Window.clearcolor = (255, 255, 255, 1)
-
 
 
 class MyApp(App):
@@ -23,30 +21,66 @@ class MyApp(App):
     def __init__(self):
         super().__init__()
         self.layout_temp = GridLayout(cols=3)
-        self.layout_but_inp = GridLayout(cols=2, row_force_default=True, row_default_height=100, size_hint_y=0.3)
-        self.button = Button(text="Нажми на меня для подтверждения города)")
-        self.button.bind(on_press=self.on_text)
+        self.layout_but_inp = GridLayout(cols=3, row_force_default=True, row_default_height=100, size_hint_y=0.3)
+        self.lay_button = BoxLayout(orientation='vertical')
+
+        self.button_enter = Button(text="Нажми на меня для подтверждения действий)")
+        self.button_for_list = Button(text="Нажми для смены дня)")
+        self.button_for_list.bind(on_press=self.drop_down_list_button)
+        self.button_enter.bind(on_press=self.for_text)
         self.city_input = TextInput(multiline=False, hint_text="Введите город")
 
         self.values_list = list()
         self.city = ""
+        self.day = 'сегодня'
 
+        self.lay_button.add_widget(self.button_for_list)
         self.layout_but_inp.add_widget(self.city_input)
-        self.layout_but_inp.add_widget(self.button)
+        self.layout_but_inp.add_widget(self.lay_button)
+        self.layout_but_inp.add_widget(self.button_enter)
+
+    # функция для отображения списка дней
+    def drop_down_list_button(self, *args):
+        self.lay_button.clear_widgets()
+        b1 = Button(text='Сегодня')
+        b2 = Button(text='Завтра')
+
+        b1.bind(on_press=self.change_of_today)
+        b2.bind(on_press=self.change_of_tomorrow)
+
+        self.lay_button.add_widget(b1)
+        self.lay_button.add_widget(b2)
+
+    def change_of_today(self, *args):
+        self.lay_button.clear_widgets()
+        self.day = 'сегодня'
+        self.lay_button.add_widget(self.button_for_list)
+        self.button_for_list.bind(on_press=self.drop_down_list_button)
+
+    def change_of_tomorrow(self, *args):
+        self.lay_button.clear_widgets()
+        self.day = 'завтра'
+        self.lay_button.add_widget(self.button_for_list)
+        self.button_for_list.bind(on_press=self.drop_down_list_button)
 
     # функция для кнопки
-    def on_text(self, *args):
+    def for_text(self, *args):
         self.layout_temp.clear_widgets()
-        self.values_list = func_return_values(func_temperature_today(self.city_input.text))
+        self.values_list = func_temperature_today(city=self.city_input.text, day=self.day)
         hour = 0
-        for i in range(8):
-            self.layout_temp.add_widget(Label(text=self.values_list[2][i], font_size=20, color=(0, 0, 0, 1),
-                                              halign='left'))
-            self.layout_temp.add_widget(Label(text=self.values_list[0][i], font_size=20, color=(0, 0, 0, 1),
-                                              halign='left'))
-            self.layout_temp.add_widget(Label(text=self.values_list[1][i], font_size=20, color=(0, 0, 0, 1),
-                                              halign='left'))
-            hour += 3
+        if self.values_list != 0:
+            for i in range(8):
+                self.layout_temp.add_widget(Label(text=self.values_list[2][i], font_size=20, color=(0, 0, 0, 1),
+                                                  halign='left'))
+                self.layout_temp.add_widget(Label(text=self.values_list[0][i], font_size=20, color=(0, 0, 0, 1),
+                                                  halign='left'))
+                self.layout_temp.add_widget(Label(text=self.values_list[1][i], font_size=20, color=(0, 0, 0, 1),
+                                                  halign='left'))
+                hour += 3
+        else:
+            self.layout_temp.clear_widgets()
+            self.layout_temp.add_widget(Label(text='Введи реальный город', font_size=50, color=(0, 0, 0, 1)))
+        self.day = 'сегодня'
 
     # Чарли и фабрика по созданию виджетов
     def build(self):
