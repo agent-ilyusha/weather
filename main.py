@@ -1,3 +1,7 @@
+# -- coding: utf-8
+
+
+
 import requests
 from lxml import html
 import time
