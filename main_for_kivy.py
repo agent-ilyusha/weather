@@ -83,7 +83,7 @@ class My_prognozApp(App):
         self.day = 'сегодня'
 
     # Чарли и фабрика по созданию виджетов
-    def build(self):
+    def build(self) -> BoxLayout:
         box = BoxLayout(orientation='vertical')
         box.size_hint_y = 1
         box.add_widget(self.layout_but_inp)

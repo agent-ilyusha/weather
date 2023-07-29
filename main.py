@@ -13,7 +13,7 @@ import datetime
 # данные о закате и восходе солнышка хранятся в классе infoDaylight
 
 
-def func_temperature_today(city: str = "Москва", day='сегодня') -> dict or int:
+def func_temperature_today(city: str = "Москва", day: str = 'сегодня') -> tuple or int:
     if len(city.split()) == 1:
         page = f'https://sinoptik.ua/погода-{city.lower()}'
     else:
@@ -62,6 +62,3 @@ def func_temperature_today(city: str = "Москва", day='сегодня') -> 
 
 # //*[@id="bd1c"]/div[1]/div[2]/table/tbody/tr[2]/td[2]/div
 # //*[@id="bd1c"]/div[1]/div[2]/table/tbody/tr[2]/td[1]/div
-
-
-
