@@ -15,7 +15,7 @@ Window.size = (1280, 520)
 Window.clearcolor = (255, 255, 255, 1)
 
 
-class MyApp(App):
+class My_prognoz_App(App):
 
     # переменные
     def __init__(self):
@@ -42,14 +42,14 @@ class MyApp(App):
     # функция для отображения списка дней
     def drop_down_list_button(self, *args):
         self.lay_button.clear_widgets()
-        b1 = Button(text='Сегодня')
-        b2 = Button(text='Завтра')
+        b_today = Button(text='Сегодня')
+        b_tomorrow = Button(text='Завтра')
 
-        b1.bind(on_press=self.change_of_today)
-        b2.bind(on_press=self.change_of_tomorrow)
+        b_today.bind(on_press=self.change_of_today)
+        b_tomorrow.bind(on_press=self.change_of_tomorrow)
 
-        self.lay_button.add_widget(b1)
-        self.lay_button.add_widget(b2)
+        self.lay_button.add_widget(b_today)
+        self.lay_button.add_widget(b_tomorrow)
 
     def change_of_today(self, *args):
         self.lay_button.clear_widgets()
@@ -91,7 +91,7 @@ class MyApp(App):
         return box
 
 
-my_app = MyApp()
+my_app = My_prognoz_App()
 
 if __name__ == "__main__":
     my_app.run()
