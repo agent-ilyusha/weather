@@ -8,7 +8,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.core.window import Window
-from main import func_return_values, func_temperature_today
+from main import func_temperature_today
 
 
 Window.title = "Прогноз погоды"
@@ -37,7 +37,7 @@ class MyApp(App):
     # функция для кнопки
     def on_text(self, *args):
         self.layout_temp.clear_widgets()
-        self.values_list = func_return_values(func_temperature_today(self.city_input.text))
+        self.values_list = func_temperature_today(self.city_input.text)
         hour = 0
         for i in range(8):
             self.layout_temp.add_widget(Label(text=self.values_list[2][i], font_size=20, color=(0, 0, 0, 1),
