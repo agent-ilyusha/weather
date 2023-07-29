@@ -10,12 +10,12 @@ from kivy.uix.button import Button
 from kivy.core.window import Window
 from main import func_temperature_today
 
-Window.title = "Прогноз погоды"
+Window.title = "title"
 Window.size = (1280, 520)
 Window.clearcolor = (255, 255, 255, 1)
 
 
-class My_prognoz_App(App):
+class My_prognozApp(App):
 
     # переменные
     def __init__(self):
@@ -91,7 +91,7 @@ class My_prognoz_App(App):
         return box
 
 
-my_app = My_prognoz_App()
+my_app = My_prognozApp()
 
 if __name__ == "__main__":
     my_app.run()
